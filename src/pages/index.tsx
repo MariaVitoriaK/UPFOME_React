@@ -16,10 +16,10 @@ export default function Home() {
         professorFezChamada ? <h1>terminou a Aula</h1>: <h1>Ainda em Aula</h1>
       }
       <br />
-      <br />
       <Button variant="warning" onClick={() => setContador(contador + 1)}>Incrementar</Button>
       <Button variant="danger" onClick={() => setContador(contador - 1)}>Decrementar</Button>
       <br />
+      <hr />
       <Button variant="primary" onClick={() => setProfessorFezChamada(!professorFezChamada)}>Chamada</Button>
     </>
   );

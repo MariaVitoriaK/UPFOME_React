@@ -13,7 +13,8 @@ export default function NavBar({pagina}: NavBarProps){
           <Nav className="me-auto">
             {pagina != 'home' && <Nav.Link as={Link} href="/">Home</Nav.Link>}
             {pagina != 'usuarios' && <Nav.Link as={Link} href="/usuarios">User</Nav.Link>}
-            {pagina != 'produdos' && <Nav.Link as={Link} href="/produtos">Product</Nav.Link>}
+            {pagina != 'produtos' && <Nav.Link as={Link} href="/produtos">Product</Nav.Link>}
+            {pagina != 'dogs' && <Nav.Link as={Link} href="/cachorros">Dogs</Nav.Link>}
           </Nav>
         </Container>
       </Navbar>
