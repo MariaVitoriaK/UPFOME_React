@@ -1,8 +1,7 @@
 import NavBar from "@/components/NavBar"
 import api from "@/services/api"
-import { error } from "console"
 import { useEffect, useRef, useState } from "react"
-import { Button } from "react-bootstrap"
+import { Button, Card, Form } from "react-bootstrap"
 
 export default function Cachorros() {
     const [nomeCachorro, setNomeCachorro] = useState('')
@@ -12,9 +11,18 @@ export default function Cachorros() {
 
     const [racaCachorro, setRacaCachorro] = useState('')
 
+    function handleChange(e: any) {
+        setRacaCachorro(e.target.value)
+    }
+
+    function buscaCachorro(e: any) {
+        e.preventDefault()
+        setUpdate(!update)
+    }
+
     useEffect(() => {
         if (!firstRun.current) {
-            api.get('/breeds/image/random').then((response) => {
+            api.get(`/breed/${racaCachorro}/images/random`).then((response) => {
                 if (response.status == 200) {
                     const data = response.data
                     setFotoCachorro(data.message) 
@@ -37,25 +45,27 @@ export default function Cachorros() {
             <h1>{nomeCachorro}</h1> :
             <h1>Procurando cachorro</h1>
         }
-        <br />
-        {
-            fotoCachorro != '' ?
-            <img src={fotoCachorro} alt="Foto de um cachorro" /> :
-            <h2>Procurando foto...</h2>
-        }
-        <br />
-        <form>
-            <label>
-                Escola a raça do cachorro:
-                <input 
-                type="text"
-                value={}
-                onChange={}
-                />
-            </label>
-        </form>
-        <br />
-        <Button type="submit" variant="warning" onClick={() => setUpdate(!update)}>Atualizar 🐶</Button>
-        </>
+    <br />
+
+    <Card style={{ width: '18rem' }}>
+      <Card.Img variant="top" src={fotoCachorro} />
+      <Card.Body>
+        <Form>
+            <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Raça do Cachorro</Form.Label>
+                <Form.Control 
+                    type="text" 
+                    placeholder="pug" 
+                    value={racaCachorro}
+                    onChange={handleChange}
+                    required />
+            </Form.Group>
+            <Button variant="primary" type="submit" onClick={buscaCachorro}>
+                Submit 🐶
+            </Button >
+        </Form>
+      </Card.Body>
+    </Card>   
+    </>
     )
 }
