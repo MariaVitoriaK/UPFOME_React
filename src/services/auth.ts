@@ -1,3 +1,4 @@
+import api from "./api";
 
 
 const TOKEN = "MinhaSenhaSegura123456";
@@ -12,13 +13,15 @@ export async function doLogin(loginPayload: LoginPayload) {
         return {sucess: false, message: "User ou password inválidos :("}
     }
 
-    if(loginPayload.username === "teste" && loginPayload.password === "teste") {
-        const token = "imagineTokenJwtAqui"
-        localStorage.setItem(TOKEN, token )
-        return {sucess: true, token: token }
-    }
+    const {data} = await api.post("/login", loginPayload)
 
-    return {sucess: false, message: "Erro no login"}
+    if (!data.token) {
+        return {sucess: false, message: "Login inválido :("}
+    }
+    const token = data.token
+    localStorage.setItem(TOKEN, token )
+    return {sucess: true, token: token }
+    
 }
 
 export function getToken() {
@@ -31,4 +34,8 @@ export  function verifyToken(token: string): boolean{
         return false
     }
     return true
+}
+
+export function doLogoff(){
+    localStorage.removeItem(TOKEN)
 }
